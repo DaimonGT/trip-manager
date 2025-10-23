@@ -22,10 +22,10 @@ public class Trip {
     private String destination;
 
     @Column(nullable = false)
-    private LocalDate startDate; // стоит ли использовать строку?
+    private LocalDate startDate;
 
     @Column(nullable = false)
-    private LocalDate endDate; // стоит ли использовать строку?
+    private LocalDate endDate;
 
     @Column(nullable = false)
     private String weatherData; // буду получать данные из API и сохранять сюда

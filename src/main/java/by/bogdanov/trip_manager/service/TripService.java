@@ -12,7 +12,6 @@ public class TripService {
     private final TripRepository tripRepository;
 
     // конструктор
-    @Autowired
     public TripService(TripRepository tripRepository) {
         this.tripRepository = tripRepository;
     }

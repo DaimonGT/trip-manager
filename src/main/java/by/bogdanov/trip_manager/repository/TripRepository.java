@@ -12,11 +12,11 @@ import java.util.Optional;
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
     // получить поездку по названию
-    Optional<Trip> findByName(String name);
+    Optional<Trip> findByNameTrip(String nameTrip);
 
     // получить все поездки по датам
-    List<Trip> findByBetweenDate(LocalDate start, LocalDate end);
+    List<Trip> findByStartDate(LocalDate startDate);
 
     // получить все поездки по месту назначения
-    List<Trip> findByDestination (String destination);
+    List<Trip> findByDestination(String destination);
 }

@@ -42,5 +42,4 @@ public class WeatherApiClient {
             throw new RuntimeException("Ошибка получения данных о погоде");
         }
     }
-
 }

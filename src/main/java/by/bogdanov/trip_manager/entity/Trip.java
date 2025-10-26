@@ -33,6 +33,9 @@ public class Trip {
     // зависимости?
 
     // конструктор
+    public Trip() {
+    }
+
     public Trip(String nameTrip, String destination, LocalDate startDate, LocalDate endDate, String weatherData) {
         this.nameTrip = nameTrip;
         this.destination = destination;

@@ -1,10 +1,8 @@
 package by.bogdanov.trip_manager.entity;
 
-import by.bogdanov.trip_manager.dto.Day;
 import by.bogdanov.trip_manager.dto.WeatherDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import org.hibernate.mapping.Collection;
 
 import java.time.LocalDate;
 
@@ -43,7 +41,11 @@ public class Weather {
     @Column(nullable = false)
     private String condition;
 
-    // конструктор
+    // конструкторы
+
+    public Weather() {
+    }
+
     public Weather(LocalDate startDate, String name, String region, String country, double maxtemp_c, double mintemp_c, double avgtemp_c, String condition) {
         this.startDate = startDate;
         this.locationName = name;

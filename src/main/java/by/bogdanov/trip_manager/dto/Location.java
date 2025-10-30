@@ -11,6 +11,7 @@ public class Location {
         this.region = region;
         this.country = country;
     }
+
     // геттеры и сеттеры
     public String getName() {
         return name;

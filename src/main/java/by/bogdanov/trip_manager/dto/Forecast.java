@@ -9,6 +9,7 @@ public class Forecast {
     public Forecast(List<Forecastday> forecastday) {
         this.forecastday = forecastday;
     }
+
     // геттеры и сеттеры
 
 

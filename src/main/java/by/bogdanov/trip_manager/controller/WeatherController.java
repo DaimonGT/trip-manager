@@ -26,7 +26,7 @@ public class WeatherController {
 
     // Положить полученную погоду в методе getWeatherData в базу
 
-    @GetMapping
+    @GetMapping(value = "/getWeatherForTrip")
     public ResponseEntity<Weather> getWeather(
             @RequestParam String location,
             @RequestParam LocalDate day

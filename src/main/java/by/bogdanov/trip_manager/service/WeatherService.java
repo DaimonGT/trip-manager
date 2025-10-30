@@ -23,9 +23,13 @@ public class WeatherService {
     // Возвращаем погоду
     public Weather getWeatherData(String location, LocalDate startDate) { // LocalDate endDate - 3-параметр
         WeatherDTO weatherDTO = weatherApiClient.getWeatherData(location, startDate); // 3- й параметр endDate
-        Weather weather = new Weather(weatherDTO);
-        Weather saveWeather = weatherRepository.save(weather);
-        return saveWeather;
-
+        Weather weather = new Weather(weatherDTO, startDate);
+        try {
+            Weather saveWeather = weatherRepository.save(weather);
+            return saveWeather;
+        } catch (Exception e){
+            System.err.println("Ошибка при попытке вернуть запрашиваемую погоду");
+            throw new RuntimeException("шибка при попытке вернуть запрашиваемую погоду");
+        }
     }
 }

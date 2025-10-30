@@ -13,6 +13,7 @@ public class Day {
         this.avgtemp_c = avgtemp_c;
         this.condition = condition;
     }
+
     // геттеры и сеттеры
     public double getMaxtemp_c() {
         return maxtemp_c;

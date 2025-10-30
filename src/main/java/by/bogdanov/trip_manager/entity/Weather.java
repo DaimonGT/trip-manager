@@ -43,8 +43,6 @@ public class Weather {
 
     // конструкторы
 
-    public Weather() {
-    }
 
     public Weather(LocalDate startDate, String name, String region, String country, double maxtemp_c, double mintemp_c, double avgtemp_c, String condition) {
         this.startDate = startDate;
@@ -58,7 +56,8 @@ public class Weather {
     }
 
     // конструктор для WeatherService, а именно для метода getWeatherData
-    public Weather(WeatherDTO weatherDTO) {
+    public Weather(WeatherDTO weatherDTO,  LocalDate startDate) {
+        this.startDate = startDate;
         this.locationName = weatherDTO.getLocation().getName();
         this.region = weatherDTO.getLocation().getRegion();
         this.country = weatherDTO.getLocation().getCountry();

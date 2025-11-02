@@ -4,10 +4,8 @@ import by.bogdanov.trip_manager.dto.WeatherDTO;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @Component
 public class WeatherApiClient {

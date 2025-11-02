@@ -24,24 +24,19 @@ public class Trip {
     @Column(nullable = false)
     private LocalDate startDate;
 
-    @Column(nullable = false)
-    private LocalDate endDate;
+    // зависимости
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "weather_id", referencedColumnName = "id")
+    private Weather weather;
 
-    @Column(nullable = false)
-    private String weatherData; // буду получать данные из API и сохранять сюда
-
-    // зависимости?
-
-    // конструктор
+    // конструкторы
     public Trip() {
     }
 
-    public Trip(String nameTrip, String destination, LocalDate startDate, LocalDate endDate, String weatherData) {
+    public Trip(String nameTrip, String destination, LocalDate startDate) {
         this.nameTrip = nameTrip;
         this.destination = destination;
         this.startDate = startDate;
-        this.endDate = endDate;
-        this.weatherData = weatherData;
     }
 
     // геттеры и сеттеры
@@ -75,21 +70,5 @@ public class Trip {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getWeatherData() {
-        return weatherData;
-    }
-
-    public void setWeatherData(String weatherData) {
-        this.weatherData = weatherData;
     }
 }

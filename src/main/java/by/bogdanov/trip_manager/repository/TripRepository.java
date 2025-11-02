@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Long> {
 
-    // получить поездку по названию
-    Optional<Trip> findByNameTrip(String nameTrip);
+    // получить поездки по названию
+    List<Trip> findByNameTrip(String nameTrip);
 
     // получить все поездки по датам
     List<Trip> findByStartDate(LocalDate startDate);

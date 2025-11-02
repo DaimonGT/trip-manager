@@ -71,4 +71,12 @@ public class Trip {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
+
+    public Weather getWeather() {
+        return weather;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
+    }
 }

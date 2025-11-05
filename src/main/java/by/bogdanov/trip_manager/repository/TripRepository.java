@@ -2,6 +2,8 @@ package by.bogdanov.trip_manager.repository;
 
 import by.bogdanov.trip_manager.entity.Trip;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -19,4 +21,8 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
 
     // получить все поездки по месту назначения
     List<Trip> findByDestination(String destination);
+
+    // получить поездку по id
+    @Query("SELECT t FROM Trip t WHERE t.id = :id")
+    Optional<Trip> findTripById(@Param("id") Long id);
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -64,11 +65,12 @@ public class TripService {
 
     // находим поездку по ID
     @Transactional
-    public Trip findTripById(Long id) {
-        return tripRepository.findById(id).orElseThrow(() -> new RuntimeException("Поездки с таким ID: " + id + " не существует"));
+    public Optional<Trip> getTripById(Long id) {
+        return tripRepository.findTripById(id);
     }
 
     // находим все поездки по destination
+    @Transactional
     public List<Trip> findByDestination(String destination) {
         List<Trip> tripByDestination = tripRepository.findByDestination(destination);
         if (!tripByDestination.isEmpty()) {

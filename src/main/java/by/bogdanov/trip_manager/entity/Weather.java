@@ -43,6 +43,8 @@ public class Weather {
 
     // конструкторы
 
+    public Weather() {
+    }
 
     public Weather(LocalDate startDate, String name, String region, String country, double maxtemp_c, double mintemp_c, double avgtemp_c, String condition) {
         this.startDate = startDate;

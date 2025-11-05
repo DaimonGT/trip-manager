@@ -9,10 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/trips")
@@ -41,5 +40,19 @@ public class TripController {
     ) {
         Trip createdTrip = tripService.createTrip(trip);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTrip);
+    }
+
+    // получение поездки по ID
+    @GetMapping("/{id}")
+    @Operation(summary = "Получение поездки по ID", description = "Получение поездки по ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Trip find successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<Trip> getTripById(@Parameter(description = "Trip ID", required = true)
+                                                        @PathVariable Long id){
+        Optional<Trip> tripById = tripService.getTripById(id);
+        return tripById.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }

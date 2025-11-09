@@ -30,7 +30,7 @@ public class TripController {
     @PostMapping
     @Operation(summary = "Создаём новую поездку", description = "Создание поездки с данными о погоде")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Trip created successfully"),
+            @ApiResponse(responseCode = "200", description = "Trip created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -51,16 +51,16 @@ public class TripController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Trip> getTripById(@Parameter(description = "Trip ID", required = true)
-                                                        @PathVariable Long id){
+                                            @PathVariable Long id) {
         Optional<Trip> tripById = tripService.getTripById(id);
         return tripById.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     // обновление поездки по ID
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     @Operation(summary = "Обновление поездки по ID", description = "Обновление поездки по ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "Trip update successfully"),
+            @ApiResponse(responseCode = "200", description = "Trip update successfully"),
             @ApiResponse(responseCode = "404", description = "Invalid input data"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -69,8 +69,25 @@ public class TripController {
             @PathVariable Long id,
             @Parameter(description = "Trip details", required = true)
             @RequestBody Trip trip
-    ){
+    ) {
         Trip updateTrip = tripService.updateTrip(id, trip);
         return ResponseEntity.ok(updateTrip);
     }
+
+    // удаление поездки по ID
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Удаление поездки по ID", description = "Удаление поездки по ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Trip update successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<Void> deleteTripById(
+            @Parameter(description = "Trip ID", required = true)
+            @PathVariable Long id
+    ){
+        tripService.deleteTripById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -88,6 +89,22 @@ public class TripController {
     ){
         tripService.deleteTripById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    // Получение поездок по месту назначения
+    @GetMapping()
+    @Operation(summary = "Получение поездок по destination", description = "Получение поездок по destination")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Trip find successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<Trip>> getAllTripsByDestination(
+            @Parameter(description = "Trip destination", required = true)
+            @RequestParam String destination
+    ){
+        List<Trip> TripsByDestination = tripService.findByDestination(destination);
+        return ResponseEntity.ok(TripsByDestination);
     }
 
 }

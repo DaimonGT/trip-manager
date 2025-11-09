@@ -46,13 +46,31 @@ public class TripController {
     @GetMapping("/{id}")
     @Operation(summary = "Получение поездки по ID", description = "Получение поездки по ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Trip find successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "200", description = "Trip find successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Trip> getTripById(@Parameter(description = "Trip ID", required = true)
                                                         @PathVariable Long id){
         Optional<Trip> tripById = tripService.getTripById(id);
         return tripById.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    // обновление поездки по ID
+    @PutMapping("{id}")
+    @Operation(summary = "Обновление поездки по ID", description = "Обновление поездки по ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Trip update successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<Trip> updateTripById(
+            @Parameter(description = "Trip ID", required = true)
+            @PathVariable Long id,
+            @Parameter(description = "Trip details", required = true)
+            @RequestBody Trip trip
+    ){
+        Trip updateTrip = tripService.updateTrip(id, trip);
+        return ResponseEntity.ok(updateTrip);
     }
 }

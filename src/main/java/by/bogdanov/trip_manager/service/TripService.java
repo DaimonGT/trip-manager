@@ -40,7 +40,7 @@ public class TripService {
     @Transactional
     public Trip updateTrip(Long id, Trip updateTrip) {
         // находим поездку по ID
-        Trip oldTrip = tripRepository.findById(id).orElseThrow(() -> new RuntimeException("Поездка с ID: " + id + " не найдеа"));
+        Trip oldTrip = tripRepository.findById(id).orElseThrow(() -> new RuntimeException("Поездка с ID: " + id + " не найдена"));
         // обновляем поля в поездке
         oldTrip.setNameTrip(updateTrip.getNameTrip());
         oldTrip.setDestination(updateTrip.getDestination());

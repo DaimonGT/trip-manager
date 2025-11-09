@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,7 +93,8 @@ public class TripController {
     }
 
     // Получение поездок по месту назначения
-    @GetMapping()
+    @GetMapping("/{destination}")
+    //@GetMapping
     @Operation(summary = "Получение поездок по destination", description = "Получение поездок по destination")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Trip find successfully"),
@@ -101,10 +103,26 @@ public class TripController {
     })
     public ResponseEntity<List<Trip>> getAllTripsByDestination(
             @Parameter(description = "Trip destination", required = true)
-            @RequestParam String destination
+            @PathVariable String destination
+            //@RequestParam String destination
     ){
         List<Trip> TripsByDestination = tripService.findByDestination(destination);
         return ResponseEntity.ok(TripsByDestination);
     }
 
+    // получение поездок по дате назначения
+/*    @GetMapping()
+    @Operation(summary = "Получение поездок по startDate", description = "Получение поездок по startDate")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Trip find successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<Trip>> getAllTripsByStartDate(
+            @Parameter(description = "Trip startDate", required = true)
+            @RequestParam LocalDate startDate
+    ){
+        List<Trip> TripsByDestination = tripService.findTripByStartDate(startDate);
+        return ResponseEntity.ok(TripsByDestination);
+    }*/
 }

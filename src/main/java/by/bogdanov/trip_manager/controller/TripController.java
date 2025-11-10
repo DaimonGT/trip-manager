@@ -93,7 +93,7 @@ public class TripController {
     }
 
     // Получение поездок по месту назначения
-    @GetMapping("/{destination}")
+    @GetMapping("/destination/{destination}")
     //@GetMapping
     @Operation(summary = "Получение поездок по destination", description = "Получение поездок по destination")
     @ApiResponses(value = {

@@ -87,14 +87,13 @@ public class TripController {
     public ResponseEntity<Void> deleteTripById(
             @Parameter(description = "Trip ID", required = true)
             @PathVariable Long id
-    ){
+    ) {
         tripService.deleteTripById(id);
         return ResponseEntity.noContent().build();
     }
 
     // Получение поездок по месту назначения
     @GetMapping("/destination/{destination}")
-    //@GetMapping
     @Operation(summary = "Получение поездок по destination", description = "Получение поездок по destination")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Trip find successfully"),
@@ -104,14 +103,13 @@ public class TripController {
     public ResponseEntity<List<Trip>> getAllTripsByDestination(
             @Parameter(description = "Trip destination", required = true)
             @PathVariable String destination
-            //@RequestParam String destination
-    ){
+    ) {
         List<Trip> TripsByDestination = tripService.findByDestination(destination);
         return ResponseEntity.ok(TripsByDestination);
     }
 
     // получение поездок по дате назначения
-/*    @GetMapping()
+    @GetMapping("/startDate/{startDate}")
     @Operation(summary = "Получение поездок по startDate", description = "Получение поездок по startDate")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Trip find successfully"),
@@ -120,9 +118,9 @@ public class TripController {
     })
     public ResponseEntity<List<Trip>> getAllTripsByStartDate(
             @Parameter(description = "Trip startDate", required = true)
-            @RequestParam LocalDate startDate
-    ){
+            @PathVariable LocalDate startDate
+    ) {
         List<Trip> TripsByDestination = tripService.findTripByStartDate(startDate);
         return ResponseEntity.ok(TripsByDestination);
-    }*/
+    }
 }

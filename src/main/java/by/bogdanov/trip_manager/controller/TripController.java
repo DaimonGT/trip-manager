@@ -123,4 +123,20 @@ public class TripController {
         List<Trip> TripsByDestination = tripService.findTripByStartDate(startDate);
         return ResponseEntity.ok(TripsByDestination);
     }
+
+    // Получение поездок по названию
+    @GetMapping(value = "nameTrip/{nameTrip}")
+    @Operation(summary = "Получение поездок по nameTrip", description = "Получение поездок по nameTrip")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Trip find successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<Trip>> getAllTripsByNameTrip(
+            @Parameter(description = "Trips by nameTrip", required = true)
+            @PathVariable String nameTrip
+    ){
+        List<Trip> tripsByNameTrip = tripService.findByTripByNameTrip(nameTrip);
+        return ResponseEntity.ok(tripsByNameTrip);
+    }
 }

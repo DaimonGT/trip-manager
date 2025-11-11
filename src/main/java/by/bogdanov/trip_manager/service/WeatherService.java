@@ -5,8 +5,10 @@ import by.bogdanov.trip_manager.dto.WeatherDTO;
 import by.bogdanov.trip_manager.entity.Weather;
 import by.bogdanov.trip_manager.repository.WeatherRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class WeatherService {
@@ -31,5 +33,10 @@ public class WeatherService {
             System.err.println("Ошибка при попытке вернуть запрашиваемую погоду");
             throw new RuntimeException("шибка при попытке вернуть запрашиваемую погоду");
         }
+    }
+    // Получить погоду по ID
+    @Transactional
+    public Optional<Weather> getWeatherById(Long id){
+        return weatherRepository.findWeatherById(id);
     }
 }

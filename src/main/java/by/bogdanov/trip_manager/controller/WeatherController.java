@@ -1,16 +1,19 @@
 package by.bogdanov.trip_manager.controller;
 
+import by.bogdanov.trip_manager.entity.Trip;
 import by.bogdanov.trip_manager.entity.Weather;
 import by.bogdanov.trip_manager.service.WeatherService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/weather")
@@ -33,5 +36,19 @@ public class WeatherController {
     ) {
         Weather weather = weatherService.getWeatherData(location, day);
         return ResponseEntity.status(HttpStatus.CREATED).body(weather);
+    }
+
+    // Получение погоды по ID
+    @GetMapping("/{id}")
+    @Operation(summary = "Получение погоды по ID", description = "Получение погоды по ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weather find successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<Weather> getWeatherById(@Parameter(description = "Weather ID", required = true)
+                                            @PathVariable Long id) {
+        Optional<Weather> tripById = weatherService.getWeatherById(id);
+        return tripById.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }

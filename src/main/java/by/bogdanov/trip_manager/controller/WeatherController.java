@@ -66,4 +66,18 @@ public class WeatherController {
         List<Weather> weatherByLocation = weatherService.findWeatherByLocation(locationName);
         return ResponseEntity.ok(weatherByLocation);
     }
+
+    // Получение погоды по country
+    @GetMapping("country/{country}")
+    @Operation(summary = "Получение погоды по country", description = "Получение погоды по country")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weather find successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<Weather>> getWeatherByCountry(@Parameter(description = "Weather location", required = true)
+                                                             @PathVariable String country) {
+        List<Weather> weatherByCountry = weatherService.findWeatherByCountry(country);
+        return ResponseEntity.ok(weatherByCountry);
+    }
 }

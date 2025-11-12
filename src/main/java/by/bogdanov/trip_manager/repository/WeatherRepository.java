@@ -18,4 +18,7 @@ public interface WeatherRepository extends JpaRepository<Weather, Long> {
 
     // Получить погоду по локации
     List<Weather> findByLocationName(String locationName);
+
+    // Получить погоду по country
+    List<Weather> findByCountry(String country);
 }

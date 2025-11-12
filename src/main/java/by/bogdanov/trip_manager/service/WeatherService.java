@@ -50,4 +50,14 @@ public class WeatherService {
             throw new RuntimeException("Погоды с городом: " + locationName + " нет");
         }
     }
+
+    // Получить погоду по country
+    public List<Weather> findWeatherByCountry(String country){
+        List<Weather> weatherByCountry = weatherRepository.findByCountry(country);
+        if(!weatherByCountry.isEmpty()){
+            return weatherByCountry;
+        } else {
+            throw new RuntimeException("Погоды по стране: " + country + " нет");
+        }
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,4 +15,7 @@ public interface WeatherRepository extends JpaRepository<Weather, Long> {
     // Получить погоду по id (новое)
     @Query("SELECT w FROM Weather w WHERE w.id = :id")
     Optional<Weather> findWeatherById(@Param("id") Long id);
+
+    // Получить погоду по локации
+    List<Weather> findByLocationName(String locationName);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,15 @@ public class WeatherService {
     @Transactional
     public Optional<Weather> getWeatherById(Long id){
         return weatherRepository.findWeatherById(id);
+    }
+
+    // Получить погоду по location
+    public List<Weather> findWeatherByLocation(String locationName){
+        List<Weather> weatherByLocation = weatherRepository.findByLocationName(locationName);
+        if(!weatherByLocation.isEmpty()){
+            return weatherByLocation;
+        } else {
+            throw new RuntimeException("Погоды с городом: " + locationName + " нет");
+        }
     }
 }

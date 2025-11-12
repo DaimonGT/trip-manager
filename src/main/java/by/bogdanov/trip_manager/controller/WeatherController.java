@@ -1,6 +1,5 @@
 package by.bogdanov.trip_manager.controller;
 
-import by.bogdanov.trip_manager.entity.Trip;
 import by.bogdanov.trip_manager.entity.Weather;
 import by.bogdanov.trip_manager.service.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -47,8 +47,23 @@ public class WeatherController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<Weather> getWeatherById(@Parameter(description = "Weather ID", required = true)
-                                            @PathVariable Long id) {
+                                                  @PathVariable Long id) {
         Optional<Weather> tripById = weatherService.getWeatherById(id);
         return tripById.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    // Получение погоды по locationName
+    @GetMapping("location/{locationName}")
+    @Operation(summary = "Получение погоды по locationName", description = "Получение погоды по locationName")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weather find successfully"),
+            @ApiResponse(responseCode = "404", description = "Invalid input data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<List<Weather>> getWeatherByLocationName(@Parameter(description = "Weather location", required = true)
+                                                                  @PathVariable String locationName
+    ) {
+        List<Weather> weatherByLocation = weatherService.findWeatherByLocation(locationName);
+        return ResponseEntity.ok(weatherByLocation);
     }
 }

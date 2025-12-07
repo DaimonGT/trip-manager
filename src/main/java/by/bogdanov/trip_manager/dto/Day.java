@@ -6,7 +6,6 @@ public class Day {
     private double avgtemp_c;
     private Condition condition;
 
-    // конструктор
     public Day(double maxtemp_c, double mintemp_c, double avgtemp_c, Condition condition) {
         this.maxtemp_c = maxtemp_c;
         this.mintemp_c = mintemp_c;
@@ -14,7 +13,6 @@ public class Day {
         this.condition = condition;
     }
 
-    // геттеры и сеттеры
     public double getMaxtemp_c() {
         return maxtemp_c;
     }

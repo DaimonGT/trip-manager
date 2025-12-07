@@ -14,7 +14,6 @@ import java.util.Optional;
 @Service
 public class WeatherService {
 
-
     private final WeatherApiClient weatherApiClient;
     private final WeatherRepository weatherRepository;
 
@@ -50,7 +49,6 @@ public class WeatherService {
             throw new RuntimeException("Погоды с городом: " + locationName + " нет");
         }
     }
-
     // Получить погоду по country
     public List<Weather> findWeatherByCountry(String country){
         List<Weather> weatherByCountry = weatherRepository.findByCountry(country);

@@ -4,13 +4,10 @@ public class Forecastday {
     private String date;
     private Day day;
 
-    // конструктор
     public Forecastday(String date, Day day) {
         this.date = date;
         this.day = day;
     }
-
-    // геттеры и сеттеры
 
     public String getDate() {
         return date;

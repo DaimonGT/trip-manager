@@ -19,10 +19,8 @@ import java.util.Optional;
 @RequestMapping("/api/trips")
 public class TripController {
 
-    // подключаем tripService
     private final TripService tripService;
 
-    // конструктор
     @Autowired
     public TripController(TripService tripService) {
         this.tripService = tripService;
@@ -135,7 +133,7 @@ public class TripController {
     public ResponseEntity<List<Trip>> getAllTripsByNameTrip(
             @Parameter(description = "Trips by nameTrip", required = true)
             @PathVariable String nameTrip
-    ){
+    ) {
         List<Trip> tripsByNameTrip = tripService.findByTripByNameTrip(nameTrip);
         return ResponseEntity.ok(tripsByNameTrip);
     }

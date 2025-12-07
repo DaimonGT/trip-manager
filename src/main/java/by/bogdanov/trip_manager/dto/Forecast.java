@@ -5,13 +5,9 @@ import java.util.List;
 public class Forecast {
     private List<Forecastday> forecastday;
 
-    // конструктор
     public Forecast(List<Forecastday> forecastday) {
         this.forecastday = forecastday;
     }
-
-    // геттеры и сеттеры
-
 
     public List<Forecastday> getForecastday() {
         return forecastday;

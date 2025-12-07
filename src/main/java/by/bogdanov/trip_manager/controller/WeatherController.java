@@ -21,14 +21,12 @@ public class WeatherController {
     // подключаем сервис погоды
     private final WeatherService weatherService;
 
-    // конструктор
     @Autowired
     public WeatherController(WeatherService weatherService) {
         this.weatherService = weatherService;
     }
 
     // Положить полученную погоду в методе getWeatherData в базу
-
     @GetMapping(value = "/getWeatherForTrip")
     public ResponseEntity<Weather> getWeather(
             @RequestParam String location,

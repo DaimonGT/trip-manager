@@ -5,14 +5,12 @@ public class Location {
     private String region;
     private String country;
 
-    // конструктор
     public Location(String name, String region, String country) {
         this.name = name;
         this.region = region;
         this.country = country;
     }
 
-    // геттеры и сеттеры
     public String getName() {
         return name;
     }

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/trips")
 public class TripController {
@@ -38,6 +40,7 @@ public class TripController {
             @Parameter(description = "Trip details", required = true)
             @RequestBody Trip trip
     ) {
+        log.info("Запрос на сощдание новой поездки: {}", trip.getNameTrip());
         Trip createdTrip = tripService.createTrip(trip);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTrip);
     }
@@ -52,8 +55,17 @@ public class TripController {
     })
     public ResponseEntity<Trip> getTripById(@Parameter(description = "Trip ID", required = true)
                                             @PathVariable Long id) {
+        log.info("Запрос на получение поездки по ID: {}", id);
         Optional<Trip> tripById = tripService.getTripById(id);
-        return tripById.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return tripById.map(trip -> {
+                    log.info("Поездка найдена: {}", trip.getId());
+                    return ResponseEntity.ok(trip);
+                }).
+                orElseGet(() -> {
+                    log.info("Поездка с ID {} не найдена", id);
+                    return ResponseEntity.notFound().build();
+                });
+        //return tripById.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     // обновление поездки по ID
@@ -70,8 +82,17 @@ public class TripController {
             @Parameter(description = "Trip details", required = true)
             @RequestBody Trip trip
     ) {
-        Trip updateTrip = tripService.updateTrip(id, trip);
-        return ResponseEntity.ok(updateTrip);
+        log.info("Запрос на обновление поездки с ID {}", id);
+        try {
+            Trip updateTrip = tripService.updateTrip(id, trip);
+            log.info("Поездка с ID {} успешно обновлена", id);
+            return ResponseEntity.ok(updateTrip);
+        } catch (Exception e) {
+            log.info("Ошибка при обновлении поездки с ID: {}", id);
+            throw new RuntimeException(e);
+        }
+        /*Trip updateTrip = tripService.updateTrip(id, trip);
+        return ResponseEntity.ok(updateTrip);*/
     }
 
     // удаление поездки по ID
@@ -86,6 +107,7 @@ public class TripController {
             @Parameter(description = "Trip ID", required = true)
             @PathVariable Long id
     ) {
+        log.info("Запрос на удаление поездки с ID {}", id);
         tripService.deleteTripById(id);
         return ResponseEntity.noContent().build();
     }
@@ -102,6 +124,7 @@ public class TripController {
             @Parameter(description = "Trip destination", required = true)
             @PathVariable String destination
     ) {
+        log.info("Запрос на получение поездок по городу {}", destination);
         List<Trip> TripsByDestination = tripService.findByDestination(destination);
         return ResponseEntity.ok(TripsByDestination);
     }
@@ -118,6 +141,7 @@ public class TripController {
             @Parameter(description = "Trip startDate", required = true)
             @PathVariable LocalDate startDate
     ) {
+        log.info("Запрос на получение поездок по дате {}", startDate);
         List<Trip> TripsByDestination = tripService.findTripByStartDate(startDate);
         return ResponseEntity.ok(TripsByDestination);
     }
@@ -134,6 +158,7 @@ public class TripController {
             @Parameter(description = "Trips by nameTrip", required = true)
             @PathVariable String nameTrip
     ) {
+        log.info("Запрос на получение поездок с названием {}", nameTrip);
         List<Trip> tripsByNameTrip = tripService.findByTripByNameTrip(nameTrip);
         return ResponseEntity.ok(tripsByNameTrip);
     }

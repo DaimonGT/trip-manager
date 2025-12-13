@@ -30,7 +30,7 @@ public class WeatherService {
             Weather saveWeather = weatherRepository.save(weather);
             return saveWeather;
         } catch (Exception e){
-            System.err.println("Ошибка при попытке вернуть запрашиваемую погоду");
+            System.out.println("Ошибка при попытке вернуть запрашиваемую погоду");
             throw new RuntimeException("шибка при попытке вернуть запрашиваемую погоду");
         }
     }

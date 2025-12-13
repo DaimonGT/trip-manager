@@ -40,9 +40,15 @@ public class TripController {
             @Parameter(description = "Trip details", required = true)
             @RequestBody Trip trip
     ) {
-        log.info("Запрос на сощдание новой поездки: {}", trip.getNameTrip());
-        Trip createdTrip = tripService.createTrip(trip);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTrip);
+        log.info("Запрос на создание новой поездки: {}", trip.getNameTrip());
+        try {
+            Trip createdTrip = tripService.createTrip(trip);
+            log.info("Поездка успешно создана с ID: {}", createdTrip.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTrip);
+        } catch (Exception e) {
+            log.info("Ошибка при создании поездки: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     // получение поездки по ID
@@ -91,8 +97,6 @@ public class TripController {
             log.info("Ошибка при обновлении поездки с ID: {}", id);
             throw new RuntimeException(e);
         }
-        /*Trip updateTrip = tripService.updateTrip(id, trip);
-        return ResponseEntity.ok(updateTrip);*/
     }
 
     // удаление поездки по ID
@@ -108,8 +112,14 @@ public class TripController {
             @PathVariable Long id
     ) {
         log.info("Запрос на удаление поездки с ID {}", id);
-        tripService.deleteTripById(id);
-        return ResponseEntity.noContent().build();
+        try {
+            tripService.deleteTripById(id);
+            log.info("Поездка с ID {} успешна удалена", id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            log.info("Ошибка при удалении поездки с ID: {}", id);
+            throw new RuntimeException(e);
+        }
     }
 
     // Получение поездок по месту назначения
@@ -125,8 +135,14 @@ public class TripController {
             @PathVariable String destination
     ) {
         log.info("Запрос на получение поездок по городу {}", destination);
-        List<Trip> TripsByDestination = tripService.findByDestination(destination);
-        return ResponseEntity.ok(TripsByDestination);
+        try {
+            List<Trip> TripsByDestination = tripService.findByDestination(destination);
+            log.info("Найдено {} поездок в город {}",TripsByDestination.size(), destination);
+            return ResponseEntity.ok(TripsByDestination);
+        } catch (Exception e) {
+            log.info("Поездки в город {} не найдены: {}", destination, e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     // получение поездок по дате назначения
@@ -142,8 +158,14 @@ public class TripController {
             @PathVariable LocalDate startDate
     ) {
         log.info("Запрос на получение поездок по дате {}", startDate);
-        List<Trip> TripsByDestination = tripService.findTripByStartDate(startDate);
-        return ResponseEntity.ok(TripsByDestination);
+        try {
+            List<Trip> tripsByDestination = tripService.findTripByStartDate(startDate);
+            log.info("Найдено {} поездок на дату {}", tripsByDestination.size(), startDate);
+            return ResponseEntity.ok(tripsByDestination);
+        } catch (Exception e) {
+            log.info("Поездки на дату {} не найдены: {}", startDate, e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     // Получение поездок по названию
@@ -159,7 +181,13 @@ public class TripController {
             @PathVariable String nameTrip
     ) {
         log.info("Запрос на получение поездок с названием {}", nameTrip);
-        List<Trip> tripsByNameTrip = tripService.findByTripByNameTrip(nameTrip);
-        return ResponseEntity.ok(tripsByNameTrip);
+        try {
+            List<Trip> tripsByNameTrip = tripService.findByTripByNameTrip(nameTrip);
+            log.info("Найдено {} поездок с названием {}", tripsByNameTrip.size(), nameTrip);
+            return ResponseEntity.ok(tripsByNameTrip);
+        } catch (Exception e) {
+            log.info("Поездки с названием {} не найдены", nameTrip);
+            throw new RuntimeException(e);
+        }
     }
 }

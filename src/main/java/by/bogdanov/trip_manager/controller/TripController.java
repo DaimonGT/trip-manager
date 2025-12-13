@@ -58,8 +58,8 @@ public class TripController {
         log.info("Запрос на получение поездки по ID: {}", id);
         Optional<Trip> tripById = tripService.getTripById(id);
         return tripById.map(trip -> {
-                    log.info("Поездка найдена: {}", trip.getId());
-                    return ResponseEntity.ok(trip);
+                    log.info("Поездка найдена: {}", tripById.get());
+                    return ResponseEntity.ok(tripById.get());
                 }).
                 orElseGet(() -> {
                     log.info("Поездка с ID {} не найдена", id);

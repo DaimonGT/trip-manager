@@ -33,7 +33,7 @@ public class WeatherApiClient {
                     WeatherDTO.class,
                     location,
                     startDate.toString(),
-                    "e08d93f3114a4a52b59160513252310" // УБЕДИСЬ, что ключ правильный!
+                    "e08d93f3114a4a52b59160513252310" // ключ
             );
             WeatherDTO weatherResponse = response.getBody();
             System.out.println("Успешное получение данных о погоде");
